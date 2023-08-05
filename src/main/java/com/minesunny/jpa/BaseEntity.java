@@ -1,13 +1,35 @@
+/*
+ * Copyright 2023 the original author or authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ */
 package com.minesunny.jpa;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Transient;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.util.ReflectionUtils;
+
 import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.Objects;
@@ -23,45 +45,49 @@ import java.util.Objects;
 @AllArgsConstructor
 public class BaseEntity {
 
-	@Column(name = "create_at")
-	@Comment(value = "create time of the record")
-	@CreationTimestamp
-	private Date createAt;
+    @Column(name = "create_at")
+    @Comment(value = "create time of the record")
+    @CreationTimestamp
+    private Date createAt;
 
 
-	@Column(name = "update_at")
-	@Comment(value = "update time of the record")
-	@LastModifiedDate
-	private Date updateAt;
+    @Column(name = "update_at")
+    @Comment(value = "update time of the record")
+    @LastModifiedDate
+    private Date updateAt;
 
-	@Column(name = "delete_at")
-	@Comment(value = "delete time of the record")
-	private Date deleteAt;
+    @Column(name = "delete_at")
+    @Comment(value = "delete time of the record")
+    private Date deleteAt;
 
 
-	@Column(name = "message")
-	@Comment(value = "about of the record")
-	private String message;
+    @Column(name = "message")
+    @Comment(value = "about of the record")
+    private String message;
+    @Transient
+    private MineSpecification<? extends BaseEntity> specification;
 
     public Long getId() {
         return null;
     }
 
+    public void setId(Long id) {
+
+    }
+
     @Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-		BaseEntity baseEntity = (BaseEntity) o;
-		return getId() != null && Objects.equals(getId(), baseEntity.getId());
-	}
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        BaseEntity baseEntity = (BaseEntity) o;
+        return getId() != null && Objects.equals(getId(), baseEntity.getId());
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(getId());
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 
-    @Transient
-    private  MineSpecification<? extends BaseEntity> specification;
     private void addExpr(Expression<?> expr) {
         if (expr == null) {
             return;
@@ -73,12 +99,13 @@ public class BaseEntity {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends BaseEntity> T expr(String fieldName, Object value, Operator operator, boolean and) {
+    private <T extends BaseEntity> T expr(String fieldName, Object value, Operator operator, boolean and) {
         addExpr(new SimpleExpression(fieldName, value.toString(), operator, and));
         return (T) this;
     }
+
     @SuppressWarnings("unchecked")
-    public  <T extends BaseEntity> T expr(String fieldName, Operator operator, boolean and) {
+    private <T extends BaseEntity> T expr(String fieldName, Operator operator, boolean and) {
         if (Objects.isNull(fieldName)) {
             return (T) this;
         }
@@ -121,20 +148,22 @@ public class BaseEntity {
     }
 
 
-
-
     public <T extends BaseEntity> T like(String fieldName, boolean and) {
         return expr(fieldName, Operator.LIKE, and);
     }
+
     public <T extends BaseEntity> T andlike(String fieldName) {
         return expr(fieldName, Operator.LIKE, true);
     }
+
     public <T extends BaseEntity> T orlike(String fieldName) {
         return expr(fieldName, Operator.LIKE, false);
     }
+
     public <T extends BaseEntity> T gt(String fieldName, boolean and) {
         return expr(fieldName, Operator.GT, and);
     }
+
     public <T extends BaseEntity> T andGt(String fieldName) {
         return expr(fieldName, Operator.GT, true);
     }
@@ -154,7 +183,6 @@ public class BaseEntity {
     public <T extends BaseEntity> T orGte(String fieldName) {
         return expr(fieldName, Operator.GTE, false);
     }
-
 
 
     public <T extends BaseEntity> T lt(String fieldName, boolean and) {
@@ -187,7 +215,7 @@ public class BaseEntity {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends BaseEntity> MineSpecification<T> specification(){
+    public <T extends BaseEntity> MineSpecification<T> specification() {
         return (MineSpecification<T>) specification;
     }
 }

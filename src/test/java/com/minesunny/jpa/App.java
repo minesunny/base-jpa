@@ -15,9 +15,20 @@
  *
  *
  */
+
 package com.minesunny.jpa;
 
-public enum Operator {
-    EQ, NE, LIKE, GT, LT, GTE, LTE, IS_NULL, NOT_NULL
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
+/**
+ * Hello world!
+ */
+@SpringBootApplication
+@EnableAspectJAutoProxy(exposeProxy = true)
+public class App {
+    public static void main(String[] args) {
+        SpringApplication.run(App.class, args);
+    }
 }

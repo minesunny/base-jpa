@@ -15,9 +15,16 @@
  *
  *
  */
-package com.minesunny.jpa;
+package com.minesunny.jpa.autoconfigure;
 
-public enum Operator {
-    EQ, NE, LIKE, GT, LT, GTE, LTE, IS_NULL, NOT_NULL
+import jakarta.persistence.EntityManager;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+
+@AutoConfiguration(before = HibernateJpaAutoConfiguration.class)
+@ConditionalOnClass({EntityManager.class})
+public class BaseJpaAutoConfiguration {
+
 
 }

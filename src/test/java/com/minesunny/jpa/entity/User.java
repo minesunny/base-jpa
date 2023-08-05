@@ -15,9 +15,31 @@
  *
  *
  */
-package com.minesunny.jpa;
+package com.minesunny.jpa.entity;
 
-public enum Operator {
-    EQ, NE, LIKE, GT, LT, GTE, LTE, IS_NULL, NOT_NULL
+import com.minesunny.jpa.BaseEntity;
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
+import java.util.Set;
+
+@Entity
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "t_user")
+@Getter
+@Setter
+@ToString
+public class User extends BaseEntity {
+    @Id
+    @GeneratedValue()
+    private Long id;
+    @Column
+    private String name = "User";
+
+    @ManyToMany(mappedBy = "users")
+    @ToString.Exclude
+    private Set<Role> roles;
 }
