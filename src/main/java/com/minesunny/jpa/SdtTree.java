@@ -17,6 +17,8 @@
  */
 package com.minesunny.jpa;
 
+import com.minesunny.jpa.entity.BaseEntity;
+import com.minesunny.jpa.entity.SdtNode;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -26,7 +26,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * Hello world!
  */
 @SpringBootApplication
-@EnableAspectJAutoProxy(exposeProxy = true)
+@EnableAspectJAutoProxy(exposeProxy = true, proxyTargetClass = true)
 public class App {
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);

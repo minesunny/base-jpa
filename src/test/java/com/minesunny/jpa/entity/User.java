@@ -17,7 +17,6 @@
  */
 package com.minesunny.jpa.entity;
 
-import com.minesunny.jpa.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

@@ -91,6 +91,8 @@ public class MapMgrImpl implements MapMgr {
                 return;
             }
             entityManager.createNativeQuery(String.format(insert, tableName, insertCondition)).executeUpdate();
+            entityManager.flush();
+            entityManager.clear();
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
 

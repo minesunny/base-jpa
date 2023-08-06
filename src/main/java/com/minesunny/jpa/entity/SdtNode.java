@@ -15,7 +15,7 @@
  *
  *
  */
-package com.minesunny.jpa;
+package com.minesunny.jpa.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

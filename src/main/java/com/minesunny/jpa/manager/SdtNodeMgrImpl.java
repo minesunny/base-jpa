@@ -17,7 +17,11 @@
  */
 package com.minesunny.jpa.manager;
 
-import com.minesunny.jpa.*;
+import com.minesunny.jpa.MineSpecification;
+import com.minesunny.jpa.SdtTree;
+import com.minesunny.jpa.ServiceException;
+import com.minesunny.jpa.entity.SdtNode;
+import com.minesunny.jpa.repository.SdtNodeRepository;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.aop.framework.AopContext;
@@ -72,7 +76,7 @@ public class SdtNodeMgrImpl implements SdtNodeMgr {
         if (Objects.isNull(parentSdtNode.getId())) {
             throw new ServiceException("[bindSdtNode]:    The parentSdtNode entity's id is required and cannot be null");
         }
-        if (Objects.equals(childSdtNode.getClass().getName(), parentSdtNode.getClass().getName())) {
+        if (!Objects.equals(childSdtNode.getClass().getName(), parentSdtNode.getClass().getName())) {
             throw new ServiceException(String.format("[bindSdtNode]:    can not bind different type entity childSdtNode [%s]," +
                     "parentSdtNode[ %s]", childSdtNode.getClass().getName(), parentSdtNode.getClass().getName()));
         }
@@ -108,20 +112,19 @@ public class SdtNodeMgrImpl implements SdtNodeMgr {
     @Override
     public void unbindSdtNode(@NotNull SdtNode childSdtNode) throws ServiceException {
         if (Objects.isNull(childSdtNode.getId())) {
-            throw new ServiceException("[deleteSdtNodes]:   The SdtNode  entity's id is required and cannot be null");
+            throw new ServiceException("[unbindSdtNode]:   The SdtNode  entity's id is required and cannot be null");
         }
         Optional<SdtNode> optionalSdtNode = repository.findById(childSdtNode.getId());
         if (optionalSdtNode.isEmpty()) {
             return;
         }
         repository.deleteByNodePathStartsWith(optionalSdtNode.get().getNodePath());
-
     }
 
     @Override
     public List<SdtNode> childSdtNodes(@NotNull SdtNode sdtNode) throws ServiceException {
         if (Objects.isNull(sdtNode.getId())) {
-            throw new ServiceException("[unbindSdtNode]:    The childSdtNode entity's id is required and cannot be null");
+            throw new ServiceException("[childSdtNodes]:    The childSdtNode entity's id is required and cannot be null");
         }
         Optional<SdtNode> optionalSdtNode = repository.findById(sdtNode.getId());
         if (optionalSdtNode.isEmpty()) {

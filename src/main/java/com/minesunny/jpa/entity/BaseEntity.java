@@ -15,12 +15,13 @@
  *
  *
  */
-package com.minesunny.jpa;
+package com.minesunny.jpa.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.Transient;
+import com.minesunny.jpa.Expression;
+import com.minesunny.jpa.MineSpecification;
+import com.minesunny.jpa.Operator;
+import com.minesunny.jpa.SimpleExpression;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
@@ -60,6 +61,8 @@ public class BaseEntity {
     @Comment(value = "delete time of the record")
     private Date deleteAt;
 
+    @Version
+    private Integer version;
 
     @Column(name = "message")
     @Comment(value = "about of the record")

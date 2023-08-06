@@ -17,14 +17,27 @@
  */
 package com.minesunny.jpa.autoconfigure;
 
+
 import jakarta.persistence.EntityManager;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @AutoConfiguration(before = HibernateJpaAutoConfiguration.class)
 @ConditionalOnClass({EntityManager.class})
+@Import(BaseJpaAutoConfiguration.JpaConfiguration.class)
 public class BaseJpaAutoConfiguration {
 
+    @ComponentScan({"com.minesunny.jpa.manager"})
+    @EntityScan({"com.minesunny.jpa.entity"})
+    @EnableJpaRepositories({"com.minesunny.jpa.repository"})
+    @Configuration
+    static class JpaConfiguration {
 
+    }
 }

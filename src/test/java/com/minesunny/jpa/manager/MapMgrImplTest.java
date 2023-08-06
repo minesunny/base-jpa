@@ -19,6 +19,7 @@
 package com.minesunny.jpa.manager;
 
 import com.minesunny.jpa.ServiceException;
+import com.minesunny.jpa.autoconfigure.BaseJpaAutoConfiguration;
 import com.minesunny.jpa.entity.Role;
 import com.minesunny.jpa.entity.User;
 import jakarta.persistence.EntityManager;
@@ -27,10 +28,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
 
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +43,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
-@Import(MapMgrImpl.class)
+@ImportAutoConfiguration(BaseJpaAutoConfiguration.class)
 class MapMgrImplTest {
     @Autowired
     EntityManager entityManager;

@@ -17,6 +17,7 @@
  */
 package com.minesunny.jpa;
 
+import com.minesunny.jpa.entity.BaseEntity;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;

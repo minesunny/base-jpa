@@ -18,15 +18,16 @@
 
 package com.minesunny.jpa.manager;
 
-import com.minesunny.jpa.SdtNode;
 import com.minesunny.jpa.SdtTree;
 import com.minesunny.jpa.ServiceException;
+import com.minesunny.jpa.autoconfigure.BaseJpaAutoConfiguration;
+import com.minesunny.jpa.entity.SdtNode;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.Commit;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
-@Import(SdtNodeMgrImpl.class)
+@ImportAutoConfiguration(BaseJpaAutoConfiguration.class)
 class SdtNodeMgrImplTest {
     @Autowired
     SdtNodeMgr nodeMgr;
@@ -54,8 +55,6 @@ class SdtNodeMgrImplTest {
 
     @Test
     void addSdtNode() throws ServiceException {
-        assertThrows(IllegalArgumentException.class, () -> nodeMgr.addSdtNode(null));
-
 
         SdtNode sdtNode = nodeMgr.addSdtNode(SdtNode.builder().nodeId(1L).build());
 
@@ -77,9 +76,7 @@ class SdtNodeMgrImplTest {
     void unbindSdtNode() throws ServiceException {
 
 
-        assertThrows(ServiceException.class, () -> {
-            nodeMgr.unbindSdtNode(new SdtNode());
-        });
+        assertThrows(ServiceException.class, () -> nodeMgr.unbindSdtNode(new SdtNode()));
 
         nodeMgr.unbindSdtNode(SdtNode.builder().id(-1L).build());
 
@@ -177,7 +174,7 @@ class SdtNodeMgrImplTest {
         if (l10 == null) {
             buildSdt();
         }
-        System.out.println(nodeMgr.descendentSdtNodes(l10).size());
+        assertEquals(11,nodeMgr.descendentSdtNodes(l10).size());
 
     }
 

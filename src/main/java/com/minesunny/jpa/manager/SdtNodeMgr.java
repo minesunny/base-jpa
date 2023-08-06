@@ -17,9 +17,9 @@
  */
 package com.minesunny.jpa.manager;
 
-import com.minesunny.jpa.SdtNode;
 import com.minesunny.jpa.SdtTree;
 import com.minesunny.jpa.ServiceException;
+import com.minesunny.jpa.entity.SdtNode;
 import jakarta.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
 

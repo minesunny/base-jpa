@@ -15,8 +15,9 @@
  *
  *
  */
-package com.minesunny.jpa;
+package com.minesunny.jpa.repository;
 
+import com.minesunny.jpa.entity.SdtNode;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
@@ -39,18 +40,18 @@ public interface SdtNodeRepository extends JpaRepositoryImplementation<SdtNode, 
     List<SdtNode> findByParentId(@Param("id") @NonNull Long id);
 
     @Transactional
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query("update SdtNode s set s.nodePath = :newPath where s.nodePath like concat(:oldPath, '%')")
     void updateNodePathByNodePathStartsWith(@NonNull @Param("oldPath") String oldPath,
                                             @NonNull @Param("newPath") String newPath);
 
     @Transactional
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query("update SdtNode s set s.nodePath = to_char(s.nodeId) where s.nodePath like concat(:oldPath, '%')")
     void updateNodePath(@NonNull @Param("oldPath") String oldPath);
 
     @Transactional
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query("delete from SdtNode s where s.nodePath like concat(:nodePath, '%')")
     void deleteByNodePathStartsWith(@NonNull @Param("nodePath") String nodePath);
 }
