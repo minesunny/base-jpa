@@ -17,7 +17,7 @@
  */
 package com.minesunny.jpa.manager;
 
-import com.minesunny.jpa.ServiceException;
+import com.minesunny.jpa.exception.ServiceException;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;

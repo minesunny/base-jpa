@@ -20,7 +20,7 @@ package com.minesunny.jpa.entity;
 import com.minesunny.jpa.Expression;
 import com.minesunny.jpa.MineSpecification;
 import com.minesunny.jpa.Operator;
-import com.minesunny.jpa.SimpleExpression;
+import com.minesunny.jpa.exception.SimpleExpression;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

@@ -19,9 +19,9 @@
 package com.minesunny.jpa.manager;
 
 import com.minesunny.jpa.SdtTree;
-import com.minesunny.jpa.ServiceException;
 import com.minesunny.jpa.autoconfigure.BaseJpaAutoConfiguration;
 import com.minesunny.jpa.entity.SdtNode;
+import com.minesunny.jpa.exception.ServiceException;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
@@ -29,6 +29,8 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Commit;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -59,9 +61,7 @@ class SdtNodeMgrImplTest {
         SdtNode sdtNode = nodeMgr.addSdtNode(SdtNode.builder().nodeId(1L).build());
 
 
-        assertThrows(ServiceException.class, () -> {
-            nodeMgr.addSdtNode(sdtNode);
-        });
+        assertThrows(ServiceException.class, () -> nodeMgr.addSdtNode(sdtNode));
     }
 
     @Test
@@ -69,6 +69,7 @@ class SdtNodeMgrImplTest {
 
         SdtNode sdtNode = nodeMgr.addSdtNode(SdtNode.builder().nodeId(1L).build());
         assertTrue(nodeMgr.readSdtNode(sdtNode).isPresent());
+        nodeMgr.unbindSdtNode(sdtNode);
     }
 
     @Test
@@ -174,6 +175,8 @@ class SdtNodeMgrImplTest {
         if (l10 == null) {
             buildSdt();
         }
+        List<SdtNode> sdtNodes = nodeMgr.descendentSdtNodes(l10);
+        sdtNodes.forEach(System.out::println);
         assertEquals(11,nodeMgr.descendentSdtNodes(l10).size());
 
     }

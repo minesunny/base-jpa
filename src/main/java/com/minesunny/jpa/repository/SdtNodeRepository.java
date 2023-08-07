@@ -47,11 +47,6 @@ public interface SdtNodeRepository extends JpaRepositoryImplementation<SdtNode, 
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query("update SdtNode s set s.nodePath = to_char(s.nodeId) where s.nodePath like concat(:oldPath, '%')")
-    void updateNodePath(@NonNull @Param("oldPath") String oldPath);
-
-    @Transactional
-    @Modifying(clearAutomatically = true)
     @Query("delete from SdtNode s where s.nodePath like concat(:nodePath, '%')")
     void deleteByNodePathStartsWith(@NonNull @Param("nodePath") String nodePath);
 }

@@ -17,7 +17,7 @@
  */
 package com.minesunny.jpa.manager;
 
-import com.minesunny.jpa.ServiceException;
+import com.minesunny.jpa.exception.ServiceException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

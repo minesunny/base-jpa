@@ -15,42 +15,56 @@
  *
  *
  */
-package com.minesunny.jpa.entity;
 
+package com.minesunny.jpa.uid.entity;
+
+import com.minesunny.jpa.entity.BaseEntity;
+import com.minesunny.jpa.type.WorkerNodeType;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Comment;
+
+import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "t_sdt")
+@Table(name = "t_work_node")
 @Getter
 @Setter
 @SuperBuilder
-@DiscriminatorColumn(name = "sdt_node_type")
-public class SdtNode extends BaseEntity {
+public class WorkNode extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "node_id")
-    @Comment(value = "node id")
-    private Long nodeId;
 
-    @Column(name = "parent_id")
-    @Comment("parent id")
-    private Long parentId;
+    /**
+     * Type of CONTAINER: HostName, ACTUAL : IP.
+     */
+    @Column
+    private String hostName;
 
-    @Column(name = "node_path")
-    @Comment(value = "nodePath")
-    private String nodePath;
+    /**
+     * Type of CONTAINER: Port, ACTUAL : Timestamp + Random(0-10000)
+     */
+    @Column
+    private String port;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    /**
+     * type of {@link WorkNode}
+     */
+    @Column
+    @Enumerated(EnumType.STRING)
+    private WorkerNodeType type;
 
-
+    /**
+     * Worker launch date, default now
+     */
+    @Column
+    private Date launchDate;
 }

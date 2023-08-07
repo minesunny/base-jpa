@@ -18,11 +18,15 @@
 package com.minesunny.jpa.autoconfigure;
 
 
+import com.minesunny.jpa.uid.UidProperties;
+import com.minesunny.jpa.uid.service.generator.impl.CachedUidGenerator;
+import com.minesunny.jpa.uid.service.generator.impl.DefaultUidGenerator;
 import jakarta.persistence.EntityManager;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -38,6 +42,23 @@ public class BaseJpaAutoConfiguration {
     @EnableJpaRepositories({"com.minesunny.jpa.repository"})
     @Configuration
     static class JpaConfiguration {
+
+    }
+
+    /**
+     * UID 的自动配置
+     *
+     * @author wujun
+     * @date 2019.02.20 10:57
+     */
+    @Configuration
+    @ComponentScan({"com.minesunny.jpa.uid.service"})
+    @EntityScan({"com.minesunny.jpa.uid.entity"})
+    @EnableJpaRepositories({"com.minesunny.jpa.uid.repository"})
+
+    @ConditionalOnClass({DefaultUidGenerator.class, CachedUidGenerator.class})
+    @EnableConfigurationProperties(UidProperties.class)
+    public static class UidAutoConfigure {
 
     }
 }

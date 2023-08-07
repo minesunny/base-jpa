@@ -17,9 +17,12 @@
  */
 package com.minesunny.jpa.entity;
 
+import com.minesunny.jpa.uid.service.generator.impl.DefaultUidGenerator;
+import com.minesunny.jpa.uid.service.generator.impl.EntityDefaultUidGenerator;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -35,7 +38,8 @@ import org.hibernate.annotations.Where;
 @ToString
 public class TestEntity extends BaseEntity {
     @Id
-    @GeneratedValue()
+    @GeneratedValue(generator = "default")
+    @GenericGenerator(name = "default",type = EntityDefaultUidGenerator.class)
     private Long id;
     @Column
     private String name = "testEntity";

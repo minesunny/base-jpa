@@ -15,8 +15,10 @@
  *
  *
  */
-package com.minesunny.jpa;
+package com.minesunny.jpa.exception;
 
+import com.minesunny.jpa.Expression;
+import com.minesunny.jpa.Operator;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor

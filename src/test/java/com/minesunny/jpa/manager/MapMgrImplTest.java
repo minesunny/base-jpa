@@ -18,10 +18,10 @@
 
 package com.minesunny.jpa.manager;
 
-import com.minesunny.jpa.ServiceException;
 import com.minesunny.jpa.autoconfigure.BaseJpaAutoConfiguration;
 import com.minesunny.jpa.entity.Role;
 import com.minesunny.jpa.entity.User;
+import com.minesunny.jpa.exception.ServiceException;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;

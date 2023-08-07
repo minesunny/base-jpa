@@ -19,9 +19,10 @@ package com.minesunny.jpa.manager;
 
 import com.minesunny.jpa.MineSpecification;
 import com.minesunny.jpa.SdtTree;
-import com.minesunny.jpa.ServiceException;
 import com.minesunny.jpa.entity.SdtNode;
+import com.minesunny.jpa.exception.ServiceException;
 import com.minesunny.jpa.repository.SdtNodeRepository;
+import com.minesunny.jpa.uid.service.generator.UidGenerator;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.aop.framework.AopContext;
@@ -46,7 +47,7 @@ public class SdtNodeMgrImpl implements SdtNodeMgr {
         }
         sdtNode.setParentId(null);
         SdtNode saved = repository.saveAndFlush(sdtNode);
-        saved.setNodePath(saved.getId().toString());
+        saved.setNodePath(saved.getId().toString() + "-");
         return saved;
     }
 
@@ -102,7 +103,7 @@ public class SdtNodeMgrImpl implements SdtNodeMgr {
                     "parentNode", readParentSdtNode.getNodePath(), readChildSdtNode.getNodePath()));
         }
         String oldNodePath = readChildSdtNode.getNodePath();
-        String newNodePath = readParentSdtNode.getNodePath() + "-" + readChildSdtNode.getId();
+        String newNodePath = readParentSdtNode.getNodePath() + readChildSdtNode.getId() + "-";
         readChildSdtNode.setNodePath(newNodePath);
         readChildSdtNode.setParentId(readParentSdtNode.getId());
         repository.saveAndFlush(readChildSdtNode);
