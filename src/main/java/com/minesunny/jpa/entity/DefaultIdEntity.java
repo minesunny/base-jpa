@@ -15,31 +15,27 @@
  *
  *
  */
+
 package com.minesunny.jpa.entity;
 
 import com.minesunny.jpa.uid.service.generator.impl.EntityDefaultUidGenerator;
-import jakarta.persistence.*;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
-@Entity
+@ToString(callSuper = true)
+@MappedSuperclass
 @SuperBuilder
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "test_entity")
 @Getter
 @Setter
-@SQLDelete(sql = "update test_entity set delete_at = current_timestamp where delete_at is null")
-@Where(clause = "delete_at is null")
-@ToString
-public class TestEntity extends BaseEntity {
+@NoArgsConstructor
+@AllArgsConstructor
+public class DefaultIdEntity extends BaseEntity {
     @Id
-    @GeneratedValue(generator = "default")
-    @GenericGenerator(name = "default", type = EntityDefaultUidGenerator.class)
+    @GeneratedValue(generator = "defaultUidGenerator")
+    @GenericGenerator(name = "defaultUidGenerator", type = EntityDefaultUidGenerator.class)
     private Long id;
-    @Column
-    private String name = "testEntity";
 }
