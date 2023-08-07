@@ -28,7 +28,7 @@ import java.util.Date;
  * @author yutianbao
  */
 
-public abstract class DateUtils{
+public abstract class DateUtils {
     /**
      * Patterns
      */
@@ -40,8 +40,6 @@ public abstract class DateUtils{
     }
 
 
-
-
     public static Date parseDate(String str, String pattern) {
         try {
             return new SimpleDateFormat(pattern).parse(str);
@@ -49,7 +47,6 @@ public abstract class DateUtils{
             throw new RuntimeException(e);
         }
     }
-
 
 
     public static String formatByDayPattern(Date date) {

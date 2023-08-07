@@ -31,7 +31,6 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -42,6 +41,7 @@ class CachedUidGeneratorTest {
     @Autowired
     @Qualifier("cachedUidGenerator")
     UidGenerator generator;
+
     @Test
     void getUID() {
         generator.getUID();

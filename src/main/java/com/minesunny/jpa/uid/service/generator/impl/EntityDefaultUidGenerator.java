@@ -22,13 +22,14 @@ import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 
 public class EntityDefaultUidGenerator implements IdentifierGenerator {
-    private static DefaultUidGenerator  generator;
+    private static DefaultUidGenerator generator;
+
+    protected static void setGenerator(DefaultUidGenerator defaultUidGenerator) {
+        generator = defaultUidGenerator;
+    }
+
     @Override
     public Object generate(SharedSessionContractImplementor session, Object object) {
         return generator.getUID();
-    }
-
-     protected static void setGenerator(DefaultUidGenerator defaultUidGenerator) {
-        generator = defaultUidGenerator;
     }
 }

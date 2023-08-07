@@ -72,7 +72,6 @@ public abstract class DockerUtils {
 
     /**
      * Whether a docker
-     *
      */
     public static boolean isDocker() {
         return IS_DOCKER;
@@ -86,9 +85,9 @@ public abstract class DockerUtils {
         DOCKER_HOST = System.getenv(ENV_KEY_HOST);
         DOCKER_PORT = System.getenv(ENV_KEY_PORT);
 
-       if (Objects.isNull(DOCKER_PORT) || Objects.equals("", DOCKER_PORT)) {
-           DOCKER_PORT = System.getenv(ENV_KEY_PORT_ORIGINAL);
-       }
+        if (Objects.isNull(DOCKER_PORT) || Objects.equals("", DOCKER_PORT)) {
+            DOCKER_PORT = System.getenv(ENV_KEY_PORT_ORIGINAL);
+        }
 
 
         boolean hasEnvHost = Objects.nonNull(DOCKER_HOST) && !Objects.equals("", DOCKER_HOST);

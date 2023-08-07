@@ -22,7 +22,6 @@ import com.minesunny.jpa.SdtTree;
 import com.minesunny.jpa.entity.SdtNode;
 import com.minesunny.jpa.exception.ServiceException;
 import com.minesunny.jpa.repository.SdtNodeRepository;
-import com.minesunny.jpa.uid.service.generator.UidGenerator;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.aop.framework.AopContext;

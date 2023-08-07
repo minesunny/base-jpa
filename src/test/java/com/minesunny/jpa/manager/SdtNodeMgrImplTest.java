@@ -99,30 +99,20 @@ class SdtNodeMgrImplTest {
 
     @Test
     void bindSdtNode() throws ServiceException {
-        assertThrows(ServiceException.class, () -> {
-            nodeMgr.bindSdtNode(new SdtNode(), new SdtNode());
-        });
+        assertThrows(ServiceException.class, () -> nodeMgr.bindSdtNode(new SdtNode(), new SdtNode()));
 
-        assertThrows(ServiceException.class, () -> {
-            nodeMgr.bindSdtNode(SdtNode.builder().id(-1L).build(), new SdtNode());
-        });
+        assertThrows(ServiceException.class, () -> nodeMgr.bindSdtNode(SdtNode.builder().id(-1L).build(), new SdtNode()));
 
-        assertThrows(ServiceException.class, () -> {
-            nodeMgr.bindSdtNode(SdtNode.builder().id(-1L).build()
-                    , SdtNode.builder().id(-1L).build());
-        });
+        assertThrows(ServiceException.class, () -> nodeMgr.bindSdtNode(SdtNode.builder().id(-1L).build()
+                , SdtNode.builder().id(-1L).build()));
         SdtNode childStdNode = nodeMgr.addSdtNode(SdtNode.builder().nodeId(1L).build());
 
-        assertThrows(ServiceException.class, () -> {
-            nodeMgr.bindSdtNode(childStdNode
-                    , SdtNode.builder().id(-1L).build());
-        });
+        assertThrows(ServiceException.class, () -> nodeMgr.bindSdtNode(childStdNode
+                , SdtNode.builder().id(-1L).build()));
         SdtNode parentStdNode = nodeMgr.addSdtNode(SdtNode.builder().nodeId(2L).build());
 
-        Assertions.assertThrows(ServiceException.class, () -> {
-            nodeMgr.bindSdtNode(childStdNode
-                    , childStdNode);
-        });
+        Assertions.assertThrows(ServiceException.class, () -> nodeMgr.bindSdtNode(childStdNode
+                , childStdNode));
         nodeMgr.bindSdtNode(childStdNode
                 , parentStdNode);
     }
@@ -177,7 +167,7 @@ class SdtNodeMgrImplTest {
         }
         List<SdtNode> sdtNodes = nodeMgr.descendentSdtNodes(l10);
         sdtNodes.forEach(System.out::println);
-        assertEquals(11,nodeMgr.descendentSdtNodes(l10).size());
+        assertEquals(11, nodeMgr.descendentSdtNodes(l10).size());
 
     }
 

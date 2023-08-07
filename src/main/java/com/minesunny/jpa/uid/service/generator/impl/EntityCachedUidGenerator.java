@@ -22,13 +22,14 @@ import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 
 public class EntityCachedUidGenerator implements IdentifierGenerator {
-    private static com.minesunny.jpa.uid.service.generator.impl.CachedUidGenerator  generator;
+    private static com.minesunny.jpa.uid.service.generator.impl.CachedUidGenerator generator;
+
+    protected static void setGenerator(com.minesunny.jpa.uid.service.generator.impl.CachedUidGenerator cachedUidGenerator) {
+        generator = cachedUidGenerator;
+    }
 
     @Override
     public Object generate(SharedSessionContractImplementor session, Object object) {
         return generator.getUID();
-    }
-    protected static void setGenerator(com.minesunny.jpa.uid.service.generator.impl.CachedUidGenerator cachedUidGenerator) {
-        generator = cachedUidGenerator;
     }
 }
