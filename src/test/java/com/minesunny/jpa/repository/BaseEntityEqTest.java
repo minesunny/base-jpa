@@ -52,4 +52,14 @@ class BaseEntityEqTest {
         assertEquals(2, all.size());
     }
 
+    @Test
+    @Commit
+    @Order(value = 3)
+    void testDelete() {
+        TestEntityCached testSave = TestEntityCached.builder()
+                .name("testSave")
+                .build();
+        TestEntityCached testEntityCached = entityRepository.saveAndFlush(testSave);
+        entityRepository.deleteById(testEntityCached.getId());
+    }
 }
